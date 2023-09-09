@@ -7,11 +7,6 @@ public class J03013 {
         int t = sc.nextInt();
         while(t-- >0){
             BigInteger a = sc.nextBigInteger(), b = sc.nextBigInteger();
-            BigInteger c = a;
-            if(a.compareTo(b) < 0){
-                a = b;
-                b = c;
-            }
             BigInteger ans = a.subtract(b);
             if(ans.toString().length() < a.toString().length()) System.out.print(0);
             System.out.println(ans);
