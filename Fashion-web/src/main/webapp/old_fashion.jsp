@@ -1,0 +1,64 @@
+<%-- 
+    Document   : User_address
+    Created on : Nov 12, 2023, 11:27:16?AM
+    Author     : Anphan
+--%>
+<%@page import="com.entity.FashionDtls"%>
+<%@page import="java.util.List"%>
+<%@page import="com.entity.User"%>
+<%@page import="com.DB.DBConnect"%>
+<%@page import="com.DAO.FashionDAOImpl"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page isELIgnored="false" %> 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>User : Old Fashion</title>
+    <%@include file="all_component/allCss.jsp" %>
+</head>
+
+<body>
+    <%@include file="all_component/navbar.jsp" %>
+
+    <c:if test="${not empty succMsg }">
+        <div class="alert alert-success text-center">${succMsg}</div>
+        <c:remove var="succMsg" scope="session" />
+    </c:if>
+
+    <div class="container p-5">
+        <table class="table table-striped">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th scope="col">Fashion Name</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                User u = (User) session.getAttribute("userobj");
+                String email = u.getEmail();
+                FashionDAOImpl dao = new FashionDAOImpl(DBConnect.getConn());
+                List<FashionDtls> list = dao.getFashionByOld(email, "Old");
+                for (FashionDtls b : list) {
+                %>
+                <tr>
+                    <td><%=b.getFashionName()%></td>
+                    <td><%=b.getSize()%></td>
+                    <td><%=b.getPrice()%></td>
+                    <td><%=b.getFashionCategory()%></td>
+                    <td><a href="delete_old_fashion?em=<%=email%>&&id=<%=b.getFashionId()%>" class="btn btn-sm btn-danger">Delete</a></td>
+                </tr>
+                <%
+                    }
+                %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

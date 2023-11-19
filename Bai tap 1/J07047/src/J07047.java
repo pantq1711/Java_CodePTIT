@@ -32,9 +32,9 @@ public class J07047 {
         while(t-- >0)
         {
             KhachHang kh = new KhachHang(sc.nextLine(), sc.nextLine(), sc.nextLine(), sc.nextLine());
-            arr.add(kh);
             kh.setDonGia(map.get(kh.getKyHieu()).getDongia());
             kh.setFee(map.get(kh.getKyHieu()).getFee());
+            arr.add(kh);
         }
         Collections.sort(arr);
         for(KhachHang kh : arr)
